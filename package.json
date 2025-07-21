@@ -1,6 +1,6 @@
 {
   "name": "gh-action-log-copy-extension",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "package": "zip -r chrome-extension.zip manifest.json content-script.js"
