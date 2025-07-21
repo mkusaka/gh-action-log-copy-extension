@@ -1,0 +1,36 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="128" height="128" rx="16" fill="#24292e"/>
+  
+  <!-- GitHub Actions style gradient background -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2188ff;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#79c0ff;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="16" fill="url(#bg-gradient)"/>
+  
+  <!-- Clipboard icon -->
+  <g transform="translate(24, 20)">
+    <!-- Clipboard body -->
+    <rect x="10" y="16" width="60" height="72" rx="4" fill="#ffffff" stroke="#586069" stroke-width="2"/>
+    
+    <!-- Clipboard clip -->
+    <rect x="28" y="8" width="24" height="16" rx="4" fill="#586069"/>
+    <rect x="32" y="4" width="16" height="12" rx="2" fill="#24292e"/>
+  </g>
+  
+  <!-- Log lines -->
+  <g transform="translate(40, 48)">
+    <rect x="0" y="0" width="48" height="3" rx="1.5" fill="#2188ff"/>
+    <rect x="0" y="8" width="40" height="3" rx="1.5" fill="#586069"/>
+    <rect x="0" y="16" width="44" height="3" rx="1.5" fill="#586069"/>
+    <rect x="0" y="24" width="36" height="3" rx="1.5" fill="#586069"/>
+  </g>
+  
+  <!-- Copy arrow -->
+  <g transform="translate(72, 72)">
+    <path d="M 0 0 L 8 0 L 8 -8 L 16 0 L 8 8 L 8 0" fill="#28a745" opacity="0.9"/>
+  </g>
+</svg>

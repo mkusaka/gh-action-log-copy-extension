@@ -3,6 +3,9 @@
   "name": "GitHub Actions Copy Log",
   "version": "0.2.0",
   "description": "Copy GitHub Actions step logs to clipboard with a single click",
+  "icons": {
+    "128": "icon-128.png"
+  },
   "permissions": [
     "clipboardWrite"
   ],
