@@ -2,7 +2,7 @@
 
 A Chrome extension that adds a "Copy log" button to each step in GitHub Actions job details page, allowing you to copy the full log content without timestamps to your clipboard with a single click.
 
-![Screenshot showing Copy log buttons on GitHub Actions job page](https://github.com/mkusaka/gh-action-log-copy-extension/assets/1462049/screenshot-placeholder)
+![Screenshot showing Copy log buttons on GitHub Actions job page](images/screenshot.png)
 
 ## Features
 
