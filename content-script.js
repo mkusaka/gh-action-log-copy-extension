@@ -1,6 +1,14 @@
+console.log('[GitHub Actions Copy Log] Script injected at:', window.location.href);
+
 (() => {
   const ORIGIN = 'https://github.com';
   console.log('[GitHub Actions Copy Log] Extension loaded');
+
+  // Check if we're on the right page
+  if (!window.location.pathname.match(/\/actions\/runs\/\d+\/job(?:s)?\/\d+/)) {
+    console.log('[GitHub Actions Copy Log] Not on a job details page, skipping');
+    return;
+  }
 
   /**
    * Add Copy log button to step header
