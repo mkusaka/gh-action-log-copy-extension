@@ -1,14 +1,5 @@
-console.log('[GitHub Actions Copy Log] Script injected at:', window.location.href);
-
 (() => {
   const ORIGIN = 'https://github.com';
-  console.log('[GitHub Actions Copy Log] Extension loaded');
-
-  // Check if we're on the right page
-  if (!window.location.pathname.match(/\/actions\/runs\/\d+\/job(?:s)?\/\d+/)) {
-    console.log('[GitHub Actions Copy Log] Not on a job details page, skipping');
-    return;
-  }
 
   /**
    * Add Copy log button to step header
@@ -19,18 +10,11 @@ console.log('[GitHub Actions Copy Log] Script injected at:', window.location.hre
 
     // Get check-step element
     const checkStep = header.closest('check-step');
-    if (!checkStep) {
-      console.log('[GitHub Actions Copy Log] No check-step element found for header:', header);
-      return;
-    }
+    if (!checkStep) return;
 
     // Get path from data-log-url attribute
     const logPath = checkStep.dataset.logUrl;
-    if (!logPath) {
-      console.log('[GitHub Actions Copy Log] No data-log-url found on check-step:', checkStep);
-      return;
-    }
-    console.log('[GitHub Actions Copy Log] Found log URL:', logPath);
+    if (!logPath) return;
 
     // Prepare Primer BtnGroup
     let group = header.querySelector('.copy-logs-group');
@@ -56,13 +40,10 @@ console.log('[GitHub Actions Copy Log] Script injected at:', window.location.hre
 
       try {
         // Automatically follow redirects (e.g. 307)
-        const fullUrl = ORIGIN + logPath;
-        console.log('[GitHub Actions Copy Log] Fetching log from:', fullUrl);
-        const res = await fetch(fullUrl, {
+        const res = await fetch(ORIGIN + logPath, {
           credentials: 'same-origin',
           redirect: 'follow'
         });
-        console.log('[GitHub Actions Copy Log] Response status:', res.status);
         if (!res.ok) throw new Error(`Status ${res.status}`);
         const text = await res.text();
 
@@ -77,13 +58,12 @@ console.log('[GitHub Actions Copy Log] Script injected at:', window.location.hre
           .join('\n');
 
         // Write to clipboard
-        console.log('[GitHub Actions Copy Log] Writing to clipboard, text length:', stripped.length);
         await navigator.clipboard.writeText(stripped);
         btn.textContent = 'Copied!';
       } catch (err) {
-        console.error('[GitHub Actions Copy Log] Error:', err);
+        console.error(err);
         btn.textContent = 'Error';
-        alert('Failed to fetch log: ' + err.message);
+        alert('Failed to fetch log');
       } finally {
         setTimeout(() => {
           btn.disabled = false;
@@ -99,27 +79,18 @@ console.log('[GitHub Actions Copy Log] Script injected at:', window.location.hre
    * Scan all step headers in the page
    */
   function scanAll() {
-    const headers = document.querySelectorAll('.CheckStep-header, summary.CheckStep-header');
-    console.log('[GitHub Actions Copy Log] Found', headers.length, 'headers to scan');
-    headers.forEach((header, index) => {
-      console.log(`[GitHub Actions Copy Log] Processing header ${index}:`, header);
-      addCopyButton(header);
-    });
+    document
+      .querySelectorAll('.CheckStep-header, summary.CheckStep-header')
+      .forEach(addCopyButton);
   }
 
   // Handle dynamic DOM updates
-  console.log('[GitHub Actions Copy Log] Setting up MutationObserver');
-  new MutationObserver(() => {
-    console.log('[GitHub Actions Copy Log] DOM mutation detected, rescanning...');
-    scanAll();
-  }).observe(document.body, { childList: true, subtree: true });
+  new MutationObserver(scanAll).observe(document.body, { childList: true, subtree: true });
 
   // Initial scan
   if (document.readyState === 'loading') {
-    console.log('[GitHub Actions Copy Log] DOM still loading, waiting for DOMContentLoaded');
     document.addEventListener('DOMContentLoaded', scanAll);
   } else {
-    console.log('[GitHub Actions Copy Log] DOM ready, scanning immediately');
     scanAll();
   }
 })();
