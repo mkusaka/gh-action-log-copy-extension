@@ -17,8 +17,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Build and package extension
-        run: npm run package
+        run: pnpm run package
       
       - name: Release
         uses: softprops/action-gh-release@v2
